@@ -1,35 +1,13 @@
 <html>
-<head></head>
-<body>
-<script>
-function gotXML(url) {
-    let html = null;
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        html = xhttp.responseText;
-      }
-    };
-    xhttp.open("GET", "https://api.allorigins.win/raw?url=" + url, false);
-    xhttp.send();
-    return html;
-}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
 
-    const host = window.location;
-    if(host.href.indexOf('.xml') > 0) {
-        let target = host.href.split('?host=')[1];
-        let xml = gotXML(target);
-        let myHead = new Headers();
-        myHead.set('content-type', 'application/xml');
-        let metas = document.createElement('meta');
-        metas.setAttribute('http-equiv', 'Content-Type');
-        metas.content = 'application/xml; charset=UTF-8';
-        document.head.append(metas);
-        let pre = document.createElement('pre')
-        pre.append(xml)
-        document.body.innerHTML = ''
-        document.body.append(pre)
-    }
-</script>
+<body>
+    <script src="/settings.js"></script>
+    <script src="/workers.js"></script>
 </body>
 </html>
