@@ -10,7 +10,7 @@
 <body>
     <p>welcome</p>
 <script>
-async function got(url) {
+function got(url) {
     let html = null;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -23,7 +23,7 @@ async function got(url) {
     return html;
 }
     
-    let html = await got('https://www.google.com')
+    let html = got('https://www.google.com')
     document.write(html)
 </script>
 </body>
