@@ -19,10 +19,10 @@ function gotXML(url) {
     if(host.href.indexOf('.xml') > 0) {
         let target = host.href.split('?host=')[1];
         let xml = gotXML(target);
-        let meta = document.createElement('meta');
-        meta.setAttribute('http-equiv', 'Content-Type');
-        meta.setAtrribute('content', 'application/xml; charset=UTF-8');
-        document.head.append(meta);
+        let metas = document.createElement('meta');
+        metas.setAttribute('http-equiv', 'Content-Type');
+        metas.content = 'application/xml; charset=UTF-8';
+        document.head.append(metas);
         let pre = document.createElement('pre')
         pre.append(xml)
         document.body.innerHTML = ''
