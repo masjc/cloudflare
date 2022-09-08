@@ -175,12 +175,13 @@ try {
         permalink: "",
       });
 
-      let s = dom.createElement("script");
-      s.setAttribute("src", "/inject.js");
-      dom.body.append(s);
-
       document.documentElement.remove();
       document.appendChild(dom.documentElement);
+
+      let s = document.createElement("script");
+      s.setAttribute("src", "/inject.js");
+      s.setAttribute("type", "text/javascript");
+      document.body.append(s);
     }
   } else {
     try {
@@ -324,12 +325,13 @@ try {
                 permalink: "",
               });
 
-              let s = dom.createElement("script");
-              s.setAttribute("src", "/inject.js");
-              dom.body.append(s);
-
               document.documentElement.remove();
               document.appendChild(dom.documentElement);
+
+              let s = document.createElement("script");
+              s.setAttribute("src", "/inject.js");
+              s.setAttribute("type", "text/javascript");
+              document.body.append(s);
             }
           } else {
             document.documentElement.innerHTML = "404";
@@ -442,12 +444,13 @@ try {
                 permalink: "",
               });
 
-              let s = dom.createElement("script");
-              s.setAttribute("src", "/inject.js");
-              dom.body.append(s);
-
               document.documentElement.remove();
               document.appendChild(dom.documentElement);
+
+              let s = document.createElement("script");
+              s.setAttribute("src", "/inject.js");
+              s.setAttribute("type", "text/javascript");
+              document.body.append(s);
             }
           }
         } else {
