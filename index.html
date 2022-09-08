@@ -19,6 +19,8 @@ function gotXML(url) {
     if(host.href.indexOf('.xml') > 0) {
         let target = host.href.split('?host=')[1];
         let xml = gotXML(target);
+        let myHead = new Headers();
+        myHead.set('content-type', 'application/xml');
         let metas = document.createElement('meta');
         metas.setAttribute('http-equiv', 'Content-Type');
         metas.content = 'application/xml; charset=UTF-8';
