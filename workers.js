@@ -183,6 +183,81 @@ try {
       s.setAttribute("type", "text/javascript");
       document.body.append(s);
     }
+  } else if (host.pathname == "/gen-sitemap") {
+    document.title = "Sitemap Generator - " + webTitle;
+    document.body.innerHTML = "";
+    var createElDom = document.createElement("div");
+    (createElDom.id = "masjc"), document.body.append(createElDom);
+    var createElStyle = document.createElement("style");
+    (createElStyle.innerHTML =
+      "button {\ncursor: pointer;\n padding: 5px 20px;\n background-color: blue; \n color: white;\n border-radius: 20px;\n }\n#masjc {\n    text-align: center;\n    padding: 10px 0;\n    z-index: 9999999;\n    position: fixed;\n    width: 100%;\n    height: 100%;\n    background-color: #fff;\n}\n#inKey {\n    width: 80%;\n    padding-left: 5px;\n    outline: none;\n    font-size: 15px;\n    height: 25px;\n    margin-bottom: 10px;\n}\n#getScrape {\n    cursor: pointer;\n    padding: 5px 20px;\n}\n#inKey {\n    width: 80%;\n    padding-left: 20px;\n    outline: none;\n    font-size: 15px;\n    height: 25px;\n    margin-bottom: 10px;\n    border-radius: 20px;\n}\n#outScrape {\n    margin: 10px 0;\n    width: 80%;\n    max-height: 150px;\n    height: 350px;\n    outline: none;\n    padding: 5px 10px;\n    border-radius: 5px;\n}\n#listUrl {\n    margin: 10px 0;\n    width: 80%;\n    max-height: 150px;\n    height: 350px;\n    outline: none;\n    padding: 5px 10px;\n    border-radius: 5px;\n}\n.countInfo {\n    margin-top: 10px;\n}\n.titleSoft {\n    padding: 10px 0;\n    font-size: 25px;\n    font-weight: bold;\n}\n.notifKey {\n    margin-top: 5px;\n}\n.bSetting {\n    text-align: right;\n    width: 80%;\n    margin: auto;\n}\n.cFooter {\n    width: max-content;\n    margin-left: 10%;\n    text-align: left;\n    position: absolute;\n    margin-top: -20px;\n}\n#bCopy, #mSave {\n    cursor: pointer;\n}\n"),
+      document.head.append(createElStyle),
+      (document.getElementById("masjc").innerHTML =
+        '\n  <div class="titleSoft">Sitemap Generator</div>\n  <div>\n  <div class="countInfo">\n    <div>Nama File</div> </div> <input id="inKey" placeholder="sitemap.xml"/>\n  </div>\n <div>\n  <div class="countInfo">\n    <div>URL</div> </div>\n    <textarea id="listUrl" placeholder="http://url1\nhttp://url2\nhttp://url3\ndst..."></textarea>\n  </div> <div><button id="getScrape">Generate</button></div>\n  <div>\n    <textarea id="outScrape" readonly></textarea>\n  </div>\n  <div class="bSetting">\n    <button id="mSave">Save</button>\n    <button id="bCopy">Copy</button>\n  </div>\n  <div class="cFooter">Design By <a href="https://www.youtube.com/c/MasJc" target="_blank">@masjc</a></div>\n');
+
+    document.getElementById("getScrape").addEventListener("click", function () {
+      var namaFile = document.getElementById("inKey").value;
+      if (namaFile == "") {
+        namaFile = "sitemap.xml";
+      } else if (namaFile.indexOf(".xml") < 0) {
+        namaFile = namaFile + ".xml";
+      }
+
+      var listUrl = document.getElementById("listUrl").value;
+      if (
+        listUrl == "" ||
+        listUrl == "\n" ||
+        listUrl == "\n\n" ||
+        listUrl == "\n\n\n"
+      ) {
+        alert("URL tidak boleh kosong");
+      } else {
+        let dataList = [];
+        listUrl = listUrl.split("\n");
+        for (let i in listUrl) {
+          if (listUrl[i] != "") {
+            dataList.push(listUrl[i]);
+          }
+        }
+
+        let date = new Date(
+          new Date().valueOf() - 1000 * 60 * 60
+        ).toISOString();
+        let res = document.getElementById("outScrape");
+        res.value =
+          '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+        dataList.forEach((a) => {
+          if (isUrl(a)) {
+            a = a.replace("://", "-");
+          }
+          res.value += `\n <url>\n  <loc>${host.origin}/host-${a}</loc>\n  <lastmod>${date}</lastmod>\n </url>`;
+        });
+        res.value += "\n</urlset>";
+      }
+    });
+
+    document.getElementById("bCopy").addEventListener("click", function () {
+      document.getElementById("outScrape").select(),
+        document.execCommand("copy");
+    }),
+      document.getElementById("mSave").addEventListener("click", function () {
+        var namaFile = document.getElementById("inKey").value;
+        if (namaFile == "") {
+          namaFile = "sitemap.xml";
+        } else if (namaFile.indexOf(".xml") < 0) {
+          namaFile = namaFile + ".xml";
+        }
+        var n = document.getElementById("outScrape").value,
+          t = new Blob([n], { type: "text/xml" }),
+          a = document.createElement("a");
+        (a.download = namaFile),
+          (a.href = window.URL.createObjectURL(t)),
+          (a.target = "_blank"),
+          (a.style.display = "none"),
+          document.getElementById("masjc").appendChild(a),
+          a.click(),
+          document.getElementById("masjc").removeChild(a);
+      });
   } else {
     try {
       if (host.href.indexOf("/host-") > 0) {
