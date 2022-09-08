@@ -324,6 +324,10 @@ try {
                 permalink: "",
               });
 
+              let s = dom.createElement("script");
+              s.setAttribute("src", "/inject.js");
+              dom.body.append(s);
+
               document.documentElement.remove();
               document.appendChild(dom.documentElement);
             }
@@ -455,5 +459,5 @@ try {
     }
   }
 } catch (e) {
-  console.log(e);
+  document.documentElement.innerHTML = "404";
 }
