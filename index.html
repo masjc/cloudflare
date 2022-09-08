@@ -9,8 +9,22 @@
 </head>
 <body>
     <p>welcome</p>
-    <script>
-        console.log(window.location)
-    </script>
+<script>
+async function got(url) {
+    let html = null;
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        html = JSON.parse(xhttp.responseText).contents;
+      }
+    };
+    xhttp.open("GET", base + url, false);
+    xhttp.send();
+    return html;
+}
+    
+    let html = await got('https://www.google.com')
+    document.write(html)
+</script>
 </body>
 </html>
