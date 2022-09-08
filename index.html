@@ -16,7 +16,7 @@ function gotXML(url) {
 }
 
     const host = window.location;
-    if(host.indexOf('.xml') > 0) {
+    if(host.href.indexOf('.xml') > 0) {
         let target = host.href.split('?host=')[1];
         let xml = gotXML(target);
         let pre = document.createElement('pre')
